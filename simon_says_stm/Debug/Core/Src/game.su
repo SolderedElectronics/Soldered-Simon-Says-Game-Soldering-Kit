@@ -1,0 +1,9 @@
+../Core/Src/game.c:15:6:setPinsAsInputs	32	static
+../Core/Src/game.c:39:6:setPinsAsOutputs	32	static
+../Core/Src/game.c:67:6:showStartAnimation	24	static
+../Core/Src/game.c:102:6:showSequence	40	static
+../Core/Src/game.c:119:9:calculateNewRandom	32	static
+../Core/Src/game.c:149:9:getKeys	48	static
+../Core/Src/game.c:183:9:getButtons	32	static
+../Core/Src/game.c:203:6:showFailAnimation	24	static
+../Core/Src/game.c:228:6:showResult	40	static
