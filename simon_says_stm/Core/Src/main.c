@@ -134,7 +134,7 @@ int main(void) {
 				HAL_Delay(500);
 				showFailAnimation(portList, pinList);
 				HAL_Delay(500);
-				showResult(132, portList, pinList);
+				showResult(steps, portList, pinList);
 				HAL_Delay(500);
 				steps = 0;
 				showStartAnimation(portList, pinList);
