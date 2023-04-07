@@ -41,17 +41,17 @@ ADC_HandleTypeDef hadc1;
 
 // List of ports, used for GPIO writes
 GPIO_TypeDef *portList[] = {
-LED_4_RED_GPIO_Port,
 LED_1_BLUE_GPIO_Port,
 LED_2_YELLOW_GPIO_Port,
-LED_3_GREEN_GPIO_Port };
+LED_3_GREEN_GPIO_Port,
+LED_4_RED_GPIO_Port};
 
 // List of pins, used for GPIO writes
 uint16_t pinList[] = {
-LED_4_RED_Pin,
 LED_1_BLUE_Pin,
 LED_2_YELLOW_Pin,
-LED_3_GREEN_Pin
+LED_3_GREEN_Pin,
+LED_4_RED_Pin,
  };
 
 // Variables which remember the state of the game

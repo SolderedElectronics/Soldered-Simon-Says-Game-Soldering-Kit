@@ -39,11 +39,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   000078ce  00000000  00000000  0003af4f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0007434c  00000000  00000000  0004281d  2**0
+ 18 .debug_str    000743b2  00000000  00000000  0004281d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000b6b69  2**0
+ 19 .comment      00000050  00000000  00000000  000b6bcf  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000015bc  00000000  00000000  000b6bbc  2**2
+ 20 .debug_frame  000015bc  00000000  00000000  000b6c20  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -614,7 +614,6 @@ uint8_t calculateNewRandom(ADC_HandleTypeDef *hadc) {
  8000482:	b086      	sub	sp, #24
  8000484:	af00      	add	r7, sp, #0
  8000486:	6078      	str	r0, [r7, #4]
-
 	uint16_t seed;
 	uint8_t temp;
 	int i;
@@ -1263,7 +1262,7 @@ int main(void) {
  8000896:	2064      	movs	r0, #100	; 0x64
  8000898:	f000 fb16 	bl	8000ec8 <HAL_Delay>
 	// So the device can be reprogrammed (development mode)
-	// HAL_Delay(4000);
+	//HAL_Delay(8000);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */

@@ -117,7 +117,6 @@ void showSequence(uint8_t *_s, uint8_t _n, ADC_HandleTypeDef *hadc, uint8_t * de
  * @params			ADC_HandleTypeDef *hadc: Pointer to ADC object to read noise from ADC to get the seed
  */
 uint8_t calculateNewRandom(ADC_HandleTypeDef *hadc) {
-
 	uint16_t seed;
 	uint8_t temp;
 	int i;
