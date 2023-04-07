@@ -54,14 +54,15 @@ simon_says_stm.list \
 
 
 # All Target
-all: main-build
+all:
+	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
 main-build: simon_says_stm.elf secondary-outputs
 
 # Tool invocations
-simon_says_stm.elf simon_says_stm.map: $(OBJS) $(USER_OBJS) C:\Users\Test\Downloads\simon_says_stm\simon_says_stm\STM32C011J4MX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "simon_says_stm.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Test\Downloads\simon_says_stm\simon_says_stm\STM32C011J4MX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simon_says_stm.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+simon_says_stm.elf simon_says_stm.map: $(OBJS) $(USER_OBJS) C:\Users\Test\Documents\Arduino\libraries\Soldered-Simon-Says-Game-Soldering-Kit\simon_says_stm\STM32C011J4MX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "simon_says_stm.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Test\Documents\Arduino\libraries\Soldered-Simon-Says-Game-Soldering-Kit\simon_says_stm\STM32C011J4MX_FLASH.ld" --specs=nosys.specs -Wl,-Map="simon_says_stm.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -80,6 +81,10 @@ clean:
 	-$(RM) default.size.stdout simon_says_stm.elf simon_says_stm.list simon_says_stm.map
 	-@echo ' '
 
+post-build:
+	arm-none-eabi-objcopy -O ihex simon_says_stm.elf simon_says_stm.hex
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
@@ -89,6 +94,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified post-build
 
 -include ../makefile.targets

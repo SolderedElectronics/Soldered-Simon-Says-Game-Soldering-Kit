@@ -41,17 +41,17 @@ ADC_HandleTypeDef hadc1;
 
 // List of ports, used for GPIO writes
 GPIO_TypeDef *portList[] = {
-LED_4_RED_GPIO_Port,
 LED_1_BLUE_GPIO_Port,
 LED_2_YELLOW_GPIO_Port,
-LED_3_GREEN_GPIO_Port };
+LED_3_GREEN_GPIO_Port,
+LED_4_RED_GPIO_Port};
 
 // List of pins, used for GPIO writes
 uint16_t pinList[] = {
-LED_4_RED_Pin,
 LED_1_BLUE_Pin,
 LED_2_YELLOW_Pin,
-LED_3_GREEN_Pin
+LED_3_GREEN_Pin,
+LED_4_RED_Pin,
  };
 
 // Variables which remember the state of the game
@@ -98,6 +98,7 @@ int main(void) {
 	/* USER CODE BEGIN SysInit */
 	// Wait 100 ms in case the finished device needs to be reprogrammed
 	HAL_Delay(100);
+
 	// Wait four seconds before initializing debug pin SWDIO as an analog read
 	// So the device can be reprogrammed (development mode)
 	HAL_Delay(8000);
@@ -133,7 +134,7 @@ int main(void) {
 				HAL_Delay(500);
 				showFailAnimation(portList, pinList);
 				HAL_Delay(500);
-				showResult(steps, portList, pinList);
+				showResult(132, portList, pinList);
 				HAL_Delay(500);
 				steps = 0;
 				showStartAnimation(portList, pinList);
