@@ -125,20 +125,26 @@ void showSequence(uint8_t *_s, uint8_t _n, ADC_HandleTypeDef *hadc, uint8_t * de
  * @params			ADC_HandleTypeDef *hadc: Pointer to ADC object to read noise from ADC to get the seed
  */
 uint8_t calculateNewRandom(ADC_HandleTypeDef *hadc) {
-
+	setPinsAsInputs();
 	uint16_t seed;
 	uint8_t temp;
 	int i;
 	//Get the data
+	HAL_Delay(1);
+
+	// Make 25 readings of noise on ADC pin and shuffle their bits
 	for (i = 0; i < 25; i++) {
+		// Randomly delay last couple of measurements by 3 ms max
+		if(i > 22) HAL_Delay(temp & 0b00000011);
 		seed ^= HAL_ADC_GetValue(hadc);
+		//Shuffle the seed
+		seed = 2053 * seed + 13849;
+		//XOR two bytes
+		temp = seed ^ (seed >> 8);
+		//XOR two nibbles
+		temp ^= (temp >> 4);
 	}
-	//Shuffle the seed
-	seed = 2053 * seed + 13849;
-	//XOR two bytes
-	temp = seed ^ (seed >> 8);
-	//XOR two nibbles
-	temp ^= (temp >> 4);
+
 	//XOR two pairs of bits and return remainder after division by 4
 	return (temp ^ (temp >> 2)) & 0b00000011;
 }
