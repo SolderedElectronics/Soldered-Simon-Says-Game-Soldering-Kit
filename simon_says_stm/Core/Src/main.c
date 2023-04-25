@@ -44,15 +44,14 @@ GPIO_TypeDef *portList[] = {
 LED_1_BLUE_GPIO_Port,
 LED_2_YELLOW_GPIO_Port,
 LED_3_GREEN_GPIO_Port,
-LED_4_RED_GPIO_Port};
+LED_4_RED_GPIO_Port };
 
 // List of pins, used for GPIO writes
 uint16_t pinList[] = {
 LED_1_BLUE_Pin,
 LED_2_YELLOW_Pin,
 LED_3_GREEN_Pin,
-LED_4_RED_Pin,
- };
+LED_4_RED_Pin, };
 
 // Variables which remember the state of the game
 uint8_t keys[MAX_STEPS];
@@ -98,9 +97,10 @@ int main(void) {
 	/* USER CODE BEGIN SysInit */
 	// Wait 100 ms in case the finished device needs to be reprogrammed
 	HAL_Delay(100);
+
 	// Wait four seconds before initializing debug pin SWDIO as an analog read
 	// So the device can be reprogrammed (development mode)
-	//HAL_Delay(8000);
+	//HAL_Delay(4000);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
@@ -116,6 +116,7 @@ int main(void) {
 		HAL_GPIO_WritePin(portList[i], pinList[i], GPIO_PIN_SET);
 	}
 	showStartAnimation(portList, pinList);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -124,8 +125,7 @@ int main(void) {
 	// Main game code
 	while (1) {
 		if (steps < MAX_STEPS) {
-			showSequence(keys, steps, &hadc1, delayTimes, portList,
-					pinList);
+			showSequence(keys, steps, &hadc1, delayTimes, portList, pinList);
 			if (getKeys(keys, steps, portList, pinList)) {
 				HAL_Delay(500);
 				steps++;

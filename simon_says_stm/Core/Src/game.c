@@ -1,10 +1,15 @@
-/*
- * game.c
+/**
+ **************************************************
  *
- *  Created on: Feb 15, 2023
- *      Author: Test
- */
-
+ * @file        game.c
+ * @brief       Game specific STM32 code for Simon Says Game
+ *              Soldering Kit from Soldered.
+ *
+ * @note        In order to successfully run this code, make sure to use STM32 cube programmer
+ * 				And set Option Bytes -> User Configuration -> NRST_MODE 2
+ *
+ * @authors     Robert Soric for soldered.com
+ ***************************************************/
 #include "game.h"
 
 /**
@@ -82,6 +87,8 @@ void showStartAnimation(GPIO_TypeDef * portList[], uint16_t  * pinList)
 		}
 	}
 	HAL_Delay(1000);
+
+	setPinsAsInputs();
 }
 
 /**
@@ -109,6 +116,7 @@ void showSequence(uint8_t *_s, uint8_t _n, ADC_HandleTypeDef *hadc, uint8_t * de
 		HAL_GPIO_WritePin(portList[_s[i]], pinList[_s[i]], GPIO_PIN_SET);
 		HAL_Delay(delayTimes[(_n / 50) & 3]);
 	}
+	setPinsAsInputs();
 }
 
 /**
@@ -117,6 +125,7 @@ void showSequence(uint8_t *_s, uint8_t _n, ADC_HandleTypeDef *hadc, uint8_t * de
  * @params			ADC_HandleTypeDef *hadc: Pointer to ADC object to read noise from ADC to get the seed
  */
 uint8_t calculateNewRandom(ADC_HandleTypeDef *hadc) {
+
 	uint16_t seed;
 	uint8_t temp;
 	int i;
@@ -150,7 +159,6 @@ uint8_t getKeys(uint8_t keys[], uint8_t steps, GPIO_TypeDef * portList[], uint16
 	uint8_t _b;
 	int i;
 // We have to read the keys
-	setPinsAsInputs();
 	while (n <= steps) {
 		do {
 			_b = getButtons(portList, pinList);
@@ -181,7 +189,6 @@ uint8_t getKeys(uint8_t keys[], uint8_t steps, GPIO_TypeDef * portList[], uint16
  */
 uint8_t getButtons(GPIO_TypeDef * portList[], uint16_t  * pinList) {
 	uint8_t _buttons = 0;
-	setPinsAsInputs();
 
 	for (int i = 0; i < 4; i++) {
 		int pinState = HAL_GPIO_ReadPin(portList[i], pinList[i]);
@@ -213,6 +220,7 @@ void showFailAnimation(GPIO_TypeDef * portList[], uint16_t  * pinList) {
 		}
 		HAL_Delay(250);
 	}
+	setPinsAsInputs();
 }
 
 /**
@@ -230,26 +238,26 @@ void showResult(uint8_t _r, GPIO_TypeDef * portList[], uint16_t  * pinList) {
 	setPinsAsOutputs();
 	_blinks = _r / 100;
 	for (i = 0; i < _blinks; i++) {
-		HAL_GPIO_WritePin(portList[2], pinList[2], GPIO_PIN_SET);
-		HAL_Delay(SCORE_BLINK_ON);
 		HAL_GPIO_WritePin(portList[2], pinList[2], GPIO_PIN_RESET);
+		HAL_Delay(SCORE_BLINK_ON);
+		HAL_GPIO_WritePin(portList[2], pinList[2], GPIO_PIN_SET);
 		HAL_Delay(SCORE_BLINK_OFF);
 	}
 
 	_blinks = _r / 10 % 10;
 	for (i = 0; i < _blinks; i++) {
-		HAL_GPIO_WritePin(portList[1], pinList[1], GPIO_PIN_SET);
-		HAL_Delay(SCORE_BLINK_ON);
 		HAL_GPIO_WritePin(portList[1], pinList[1], GPIO_PIN_RESET);
+		HAL_Delay(SCORE_BLINK_ON);
+		HAL_GPIO_WritePin(portList[1], pinList[1], GPIO_PIN_SET);
 		HAL_Delay(SCORE_BLINK_OFF);
 	}
 
 	_blinks = _r % 10;
 	for (i = 0; i < _blinks; i++) {
-		HAL_GPIO_WritePin(portList[0], pinList[0], GPIO_PIN_SET);
-		HAL_Delay(SCORE_BLINK_ON);
 		HAL_GPIO_WritePin(portList[0], pinList[0], GPIO_PIN_RESET);
+		HAL_Delay(SCORE_BLINK_ON);
+		HAL_GPIO_WritePin(portList[0], pinList[0], GPIO_PIN_SET);
 		HAL_Delay(SCORE_BLINK_OFF);
 	}
+	setPinsAsInputs();
 }
-
